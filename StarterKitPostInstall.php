@@ -104,7 +104,7 @@ class StarterKitPostInstall
 
     protected function installNodeDependencies(): void
     {
-        if (! confirm(label: 'Do you want to install npm dependencies?', default: true)) {
+        if (! confirm(label: 'Do you want to install npm dependencies?', default: false)) {
             return;
         }
 
@@ -119,7 +119,7 @@ class StarterKitPostInstall
 
     protected function installPuppeteerAndBrowsershot(): void
     {
-        if (! confirm(label: 'Do you want to install Puppeteer and Browsershot for generating social images?', default: true)) {
+        if (! confirm(label: 'Do you want to install Puppeteer and Browsershot for generating social images?', default: false)) {
             return;
         }
 
@@ -129,7 +129,7 @@ class StarterKitPostInstall
 
     protected function installTranslations(): void
     {
-        if (! confirm(label: 'Do you want to install missing Laravel translation files?', default: $this->interactive)) {
+        if (! confirm(label: 'Do you want to install missing Laravel translation files?', default: false)) {
             return;
         }
 
@@ -167,6 +167,7 @@ class StarterKitPostInstall
                     ->all();
             },
             placeholder: 'UTC',
+            default: 'UTC',
             required: true,
         );
 
@@ -346,7 +347,7 @@ class StarterKitPostInstall
                 'mailpit' => 'Mailpit',
                 'mailtrap' => 'Mailtrap',
             ],
-            default: 'herd',
+            default: 'log',
             scroll: 10
         );
 
@@ -399,7 +400,7 @@ class StarterKitPostInstall
 
     protected function setupComposerUpdateWorkflow(): void
     {
-        if (! confirm(label: 'Do you want to add a GitHub workflow that does PR\'s with updates?', default: true)) {
+        if (! confirm(label: 'Do you want to add a GitHub workflow that does PR\'s with updates?', default: false)) {
             return;
         }
 
