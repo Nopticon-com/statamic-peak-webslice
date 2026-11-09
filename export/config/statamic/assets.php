@@ -59,7 +59,12 @@ return [
         |
         */
 
-        'cache' => 'hybrid',
+        /*
+         * Cache generated images rather than regenerating them per request. On
+         * Webslice the provider repoints cache_path at shared storage and
+         * symlinks the route to it, so the cache survives deploys.
+         */
+        'cache' => true,
         'cache_path' => public_path('img'),
 
         /*

@@ -37,6 +37,14 @@ return [
             'driver' => 'file',
             'path' => public_path('static'),
             'lock_hold_length' => 0,
+
+            /*
+             * Pages warmed at once. Each concurrent request is a serverless
+             * instance, so this trades warm speed against instances spun up.
+             * Webslice defaults a site to 10; keep this below that limit.
+             */
+            'warm_concurrency' => 5,
+
             'permissions' => [
                 'directory' => 0755,
                 'file' => 0644,
@@ -61,10 +69,17 @@ return [
         'class' => null,
 
         'urls' => [
-            '/robots.txt',
-            '/site.webmanifest',
+
+            /* Cached pages carry an expired CSRF token, so the form fails. */
+            '/contact',
+
+            /*
+             * XML, but the file cacher names every entry `.html` and the
+             * rewrite in public/.htaccess serves it as text/html.
+             */
             '/sitemap.xml',
-            '/sitemaps.xml',
+            '/feed.xml',
+
         ],
 
     ],
@@ -106,7 +121,10 @@ return [
     'ignore_query_strings' => true,
 
     'allowed_query_strings' => [
-        //
+
+        /* Without this, /blog?page=2 is served the cached copy of /blog. */
+        'page',
+
     ],
 
     'disallowed_query_strings' => [
