@@ -167,12 +167,8 @@ class StarterKitPostInstall
                     ->all();
             },
             placeholder: 'UTC',
-            required: false,
+            required: true,
         );
-
-        if (! $newDisplayTimezone) {
-            return;
-        }
 
         $currentDisplayTimezone = config('statamic.system.display_timezone');
 
